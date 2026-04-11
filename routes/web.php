@@ -6,6 +6,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/meyerhof', function () {
-    return view('meyerhof');
-})->name('meyerhof');
+Route::get('/meyerhof_sementara', function () {
+    return view('meyerhof_sementara');
+})->name('meyerhof_sementara');
