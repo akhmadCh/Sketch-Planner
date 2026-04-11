@@ -7,5 +7,5 @@ Route::get('/', function () {
 });
 
 Route::get('/meyerhof_sementara', function () {
-    return view('meyerhof_sementara');
+    return view('calculation.meyerhof');
 })->name('meyerhof_sementara');
