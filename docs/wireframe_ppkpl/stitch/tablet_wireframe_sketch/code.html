@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Skeletal Blueprint Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed": "#1b1b1b",
+                    "on-secondary-container": "#1b1b1b",
+                    "primary-fixed": "#5e5e5e",
+                    "error": "#ba1a1a",
+                    "secondary-fixed-dim": "#ababab",
+                    "surface-bright": "#f9f9f9",
+                    "tertiary-fixed-dim": "#474747",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-container": "#747474",
+                    "outline-variant": "#c6c6c6",
+                    "on-tertiary-fixed-variant": "#e2e2e2",
+                    "on-tertiary-container": "#ffffff",
+                    "on-tertiary": "#e2e2e2",
+                    "on-surface-variant": "#474747",
+                    "on-error": "#ffffff",
+                    "inverse-on-surface": "#f0f1f1",
+                    "surface-variant": "#e2e2e2",
+                    "surface-container": "#eeeeee",
+                    "surface-tint": "#5e5e5e",
+                    "inverse-surface": "#2f3131",
+                    "surface-dim": "#dadada",
+                    "surface": "#f9f9f9",
+                    "on-primary": "#e2e2e2",
+                    "secondary": "#5e5e5e",
+                    "on-primary-fixed-variant": "#e2e2e2",
+                    "inverse-primary": "#c6c6c6",
+                    "primary": "#000000",
+                    "on-surface": "#1a1c1c",
+                    "primary-fixed-dim": "#474747",
+                    "secondary-container": "#d4d4d4",
+                    "surface-container-highest": "#e2e2e2",
+                    "surface-container-high": "#e8e8e8",
+                    "surface-container-low": "#f3f3f4",
+                    "secondary-fixed": "#c6c6c6",
+                    "on-secondary-fixed-variant": "#3b3b3b",
+                    "tertiary-fixed": "#5e5e5e",
+                    "background": "#f9f9f9",
+                    "on-background": "#1a1c1c",
+                    "primary-container": "#3b3b3b",
+                    "outline": "#777777",
+                    "on-tertiary-fixed": "#ffffff",
+                    "on-primary-container": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "tertiary": "#3b3b3b",
+                    "error-container": "#ffdad6",
+                    "on-error-container": "#410002",
+                    "on-primary-fixed": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "0px"
+            },
+            "fontFamily": {
+                    "headline": ["Space Grotesk"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .wavy-line {
+            width: 100%;
+            height: 4px;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='10' viewBox='0 0 100 10' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 5 Q 12.5 0 25 5 T 50 5 T 75 5 T 100 5' stroke='%23777777' fill='transparent' stroke-width='2'/%3E%3C/svg%3E");
+            background-repeat: repeat-x;
+            background-size: 40px 8px;
+        }
+        .straight-line-bold {
+            height: 8px;
+            background-color: #000000;
+        }
+        .straight-line-thin {
+            height: 2px;
+            background-color: #000000;
+        }
+        .hatch-pattern {
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, #c6c6c6 10px, #c6c6c6 11px);
+        }
+        .diagonal-x {
+            background: 
+                linear-gradient(to top left, transparent 49.5%, #777777 49.5%, #777777 50.5%, transparent 50.5%),
+                linear-gradient(to top right, transparent 49.5%, #777777 49.5%, #777777 50.5%, transparent 50.5%);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: none !important; /* Design system forbids icons */
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface m-0 p-0 overflow-hidden">
+<div class="flex h-screen w-screen overflow-hidden">
+<!-- Sidebar Navigation (SideNavBar predicted component logic) -->
+<aside class="flex flex-col w-64 h-full p-4 bg-white border-r-2 border-black">
+<div class="mb-10 px-4">
+<div class="straight-line-bold w-3/4 mb-2"></div>
+<div class="straight-line-thin w-1/2 opacity-40"></div>
+</div>
+<nav class="flex-grow space-y-4">
+<!-- MENU_ITEM_1 (Active) -->
+<div class="bg-black flex items-center px-4 py-6 mb-2 hatch-pattern">
+<div class="w-1/2 h-2 bg-white"></div>
+</div>
+<!-- MENU_ITEM_2 -->
+<div class="border border-black flex items-center px-4 py-6 mb-2 opacity-40">
+<div class="w-2/3 h-1 bg-black"></div>
+</div>
+<!-- MENU_ITEM_3 -->
+<div class="border border-black flex items-center px-4 py-6 mb-2 opacity-40">
+<div class="w-3/4 h-1 bg-black"></div>
+</div>
+<!-- MENU_ITEM_4 -->
+<div class="border border-black flex items-center px-4 py-6 mb-2 opacity-40">
+<div class="w-1/2 h-1 bg-black"></div>
+</div>
+<!-- MENU_ITEM_5 -->
+<div class="border border-black flex items-center px-4 py-6 mb-2 opacity-40">
+<div class="w-2/3 h-1 bg-black"></div>
+</div>
+</nav>
+<div class="mt-auto px-4 pb-4 border-t border-outline-variant pt-4">
+<div class="wavy-line w-full"></div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-grow flex flex-col overflow-hidden">
+<!-- TopNavBar (predicted component logic) -->
+<header class="flex justify-between items-center w-full px-8 py-6 bg-white border-b-2 border-black">
+<div class="flex items-center space-x-6">
+<div class="straight-line-bold w-48"></div>
+</div>
+<div class="flex items-center space-x-4">
+<div class="w-32 h-8 border border-black px-2 flex items-center">
+<div class="wavy-line opacity-30"></div>
+</div>
+<div class="w-8 h-8 border-2 border-black"></div>
+<div class="w-8 h-8 border-2 border-black"></div>
+</div>
+</header>
+<!-- Dashboard Scrollable Canvas -->
+<section class="flex-grow p-8 overflow-y-auto space-y-8 bg-surface-container-low">
+<!-- Top Area: Summary Widgets -->
+<div class="grid grid-cols-4 gap-6">
+<div class="bg-surface-container-lowest border-2 border-black p-6 h-32 flex flex-col justify-between">
+<div class="straight-line-thin w-1/3"></div>
+<div class="straight-line-bold w-2/3"></div>
+</div>
+<div class="bg-surface-container-lowest border-2 border-black p-6 h-32 flex flex-col justify-between">
+<div class="straight-line-thin w-1/2"></div>
+<div class="straight-line-bold w-3/4"></div>
+</div>
+<div class="bg-surface-container-lowest border-2 border-black p-6 h-32 flex flex-col justify-between">
+<div class="straight-line-thin w-2/5"></div>
+<div class="straight-line-bold w-1/2"></div>
+</div>
+<div class="bg-surface-container-lowest border-2 border-black p-6 h-32 flex flex-col justify-between">
+<div class="straight-line-thin w-3/4"></div>
+<div class="straight-line-bold w-1/3"></div>
+</div>
+</div>
+<!-- Middle Area: Main Content Placeholder -->
+<div class="grid grid-cols-1 gap-6">
+<div class="bg-white border-2 border-black p-8 flex flex-col space-y-6">
+<div class="flex justify-between items-center">
+<div class="straight-line-bold w-64"></div>
+<div class="flex space-x-2">
+<div class="w-20 h-6 border border-outline"></div>
+<div class="w-20 h-6 border border-outline"></div>
+</div>
+</div>
+<!-- Status Kelayakan Chart Placeholder -->
+<div class="w-full aspect-[21/9] border border-outline-variant diagonal-x relative">
+<!-- Technical drafting labels indicated by small lines -->
+<div class="absolute -left-4 top-1/2 -translate-y-1/2 w-3 h-px bg-black"></div>
+<div class="absolute -bottom-4 left-1/2 -translate-x-1/2 h-3 w-px bg-black"></div>
+</div>
+<div class="grid grid-cols-3 gap-8 pt-4">
+<div class="space-y-2">
+<div class="wavy-line w-full"></div>
+<div class="wavy-line w-3/4"></div>
+</div>
+<div class="space-y-2">
+<div class="wavy-line w-full"></div>
+<div class="wavy-line w-5/6"></div>
+</div>
+<div class="space-y-2">
+<div class="wavy-line w-full"></div>
+<div class="wavy-line w-2/3"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer / Secondary Grid -->
+<div class="grid grid-cols-2 gap-6">
+<div class="bg-white border-2 border-black p-6">
+<div class="straight-line-bold w-32 mb-6"></div>
+<div class="space-y-4">
+<div class="flex items-center justify-between pb-2 border-b border-outline-variant">
+<div class="straight-line-thin w-1/2"></div>
+<div class="w-4 h-4 border border-black"></div>
+</div>
+<div class="flex items-center justify-between pb-2 border-b border-outline-variant">
+<div class="straight-line-thin w-2/3"></div>
+<div class="w-4 h-4 border border-black"></div>
+</div>
+<div class="flex items-center justify-between pb-2 border-b border-outline-variant">
+<div class="straight-line-thin w-1/3"></div>
+<div class="w-4 h-4 border border-black"></div>
+</div>
+</div>
+</div>
+<div class="bg-white border-2 border-black p-6 hatch-pattern opacity-10">
+<!-- Decorative placeholder for secondary data/logs -->
+<div class="w-full h-full border border-dashed border-black flex items-center justify-center">
+<div class="w-12 h-12 border-2 border-black rotate-45"></div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+</body></html>
