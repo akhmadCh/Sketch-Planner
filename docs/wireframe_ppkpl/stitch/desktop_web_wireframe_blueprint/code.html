@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#e2e2e2",
+                    "surface": "#f9f9f9",
+                    "primary-fixed-dim": "#474747",
+                    "tertiary": "#3b3b3b",
+                    "secondary-container": "#d4d4d4",
+                    "primary": "#000000",
+                    "on-background": "#1a1c1c",
+                    "surface-container-high": "#e8e8e8",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed": "#1b1b1b",
+                    "on-tertiary-container": "#ffffff",
+                    "inverse-surface": "#2f3131",
+                    "on-primary-fixed-variant": "#e2e2e2",
+                    "tertiary-fixed-dim": "#474747",
+                    "primary-fixed": "#5e5e5e",
+                    "on-tertiary-fixed-variant": "#e2e2e2",
+                    "primary-container": "#3b3b3b",
+                    "on-tertiary": "#e2e2e2",
+                    "inverse-primary": "#c6c6c6",
+                    "on-error-container": "#410002",
+                    "background": "#f9f9f9",
+                    "on-surface-variant": "#474747",
+                    "on-secondary-container": "#1b1b1b",
+                    "outline-variant": "#c6c6c6",
+                    "surface-dim": "#dadada",
+                    "outline": "#777777",
+                    "surface-container": "#eeeeee",
+                    "on-secondary-fixed-variant": "#3b3b3b",
+                    "secondary-fixed": "#c6c6c6",
+                    "tertiary-container": "#747474",
+                    "secondary-fixed-dim": "#ababab",
+                    "on-primary-fixed": "#ffffff",
+                    "on-surface": "#1a1c1c",
+                    "tertiary-fixed": "#5e5e5e",
+                    "on-primary-container": "#ffffff",
+                    "surface-variant": "#e2e2e2",
+                    "surface-container-low": "#f3f3f4",
+                    "surface-container-highest": "#e2e2e2",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-bright": "#f9f9f9",
+                    "inverse-on-surface": "#f0f1f1",
+                    "on-secondary": "#ffffff",
+                    "secondary": "#5e5e5e",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed": "#ffffff",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#5e5e5e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Space Grotesk"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .hatch-pattern {
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(198, 198, 198, 0.2) 5px, rgba(198, 198, 198, 0.2) 6px);
+        }
+        .wavy-line {
+            width: 100%;
+            height: 2px;
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='10' viewBox='0 0 40 10' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 5 Q 5 0, 10 5 T 20 5 T 30 5 T 40 5' stroke='%23777777' fill='transparent' stroke-width='2'/%3E%3C/svg%3E");
+            background-repeat: repeat-x;
+        }
+        .diagonal-x {
+            position: relative;
+        }
+        .diagonal-x::before, .diagonal-x::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #777777;
+            clip-path: polygon(0 0, 100% 100%, 99% 100%, 0 1%);
+            z-index: 0;
+        }
+        .diagonal-x::after {
+            clip-path: polygon(100% 0, 0 100%, 1% 100%, 100% 1%);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body antialiased m-0 p-0 overflow-hidden">
+<!-- Global Layout Shell -->
+<div class="flex h-screen w-full bg-surface-container-low">
+<!-- SideNavBar Anchor -->
+<aside class="fixed left-0 top-0 w-64 h-full z-40 flex flex-col bg-white border-r-2 border-black">
+<!-- Brand Anchor -->
+<div class="p-6 border-b-2 border-black">
+<div class="h-8 w-40 bg-black mb-1"></div>
+<div class="h-2 w-20 bg-outline"></div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 py-8">
+<!-- Active Tab -->
+<div class="bg-black text-white flex items-center gap-4 px-6 py-4 hatch-pattern">
+<div class="w-4 h-4 border border-white"></div>
+<div class="h-4 w-24 bg-white"></div>
+</div>
+<!-- Inactive Tabs -->
+<div class="flex items-center gap-4 px-6 py-4 hover:bg-gray-100 transition-none">
+<div class="w-4 h-4 border border-black"></div>
+<div class="h-4 w-32 bg-outline"></div>
+</div>
+<div class="flex items-center gap-4 px-6 py-4 hover:bg-gray-100 transition-none">
+<div class="w-4 h-4 border border-black"></div>
+<div class="h-4 w-28 bg-outline"></div>
+</div>
+<div class="flex items-center gap-4 px-6 py-4 hover:bg-gray-100 transition-none">
+<div class="w-4 h-4 border border-black"></div>
+<div class="h-4 w-36 bg-outline"></div>
+</div>
+<div class="flex items-center gap-4 px-6 py-4 hover:bg-gray-100 transition-none">
+<div class="w-4 h-4 border border-black"></div>
+<div class="h-4 w-20 bg-outline"></div>
+</div>
+</nav>
+<!-- Bottom Action -->
+<div class="p-6 mt-auto border-t-2 border-black">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 border-2 border-black"></div>
+<div class="flex flex-col gap-1">
+<div class="h-3 w-20 bg-black"></div>
+<div class="h-2 w-16 bg-outline"></div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 ml-64 flex flex-col h-full">
+<!-- TopAppBar Anchor -->
+<header class="flex justify-between items-center w-full px-10 h-16 bg-white border-b-2 border-black sticky top-0 z-30">
+<div class="flex items-center gap-8">
+<!-- Search Bar Placeholder -->
+<div class="w-64 h-8 border border-black flex items-center px-2">
+<div class="w-3 h-3 border border-outline"></div>
+<div class="ml-2 h-2 w-24 bg-outline-variant"></div>
+</div>
+<div class="flex gap-6 h-full items-center font-headline uppercase tracking-widest text-sm">
+<div class="border-b-4 border-black pb-1 h-4 w-16 bg-black"></div>
+<div class="text-gray-400 h-4 w-16 bg-surface-container-high"></div>
+<div class="text-gray-400 h-4 w-16 bg-surface-container-high"></div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 border-2 border-black flex items-center justify-center">
+<div class="w-4 h-4 border border-black"></div>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="p-10 flex-1 overflow-y-auto space-y-8">
+<!-- Section Title Placeholder -->
+<div class="space-y-2">
+<div class="h-12 w-96 bg-primary"></div>
+<div class="wavy-line max-w-xl"></div>
+</div>
+<!-- Tab Row Placeholder -->
+<div class="flex gap-2">
+<div class="px-6 py-2 border-2 border-black bg-white flex items-center justify-center">
+<div class="h-3 w-16 bg-black"></div>
+</div>
+<div class="px-6 py-2 border-2 border-black bg-surface-container flex items-center justify-center">
+<div class="h-3 w-16 bg-outline"></div>
+</div>
+<div class="px-6 py-2 border-2 border-black bg-surface-container flex items-center justify-center">
+<div class="h-3 w-16 bg-outline"></div>
+</div>
+<div class="px-6 py-2 border-2 border-black bg-surface-container flex items-center justify-center">
+<div class="h-3 w-16 bg-outline"></div>
+</div>
+</div>
+<!-- Giant Table Placeholder -->
+<div class="relative w-full aspect-[16/9] border-2 border-black bg-white diagonal-x flex items-center justify-center shadow-[4px_4px_0px_0px_#e2e2e2]">
+<!-- Optional Blueprint Label in corner -->
+<div class="absolute bottom-4 right-4 border border-black bg-white px-2 py-1 z-10">
+<div class="h-2 w-32 bg-outline-variant"></div>
+</div>
+</div>
+<!-- Secondary Grid -->
+<div class="grid grid-cols-3 gap-8">
+<div class="h-64 border border-outline bg-white p-6 space-y-4">
+<div class="h-4 w-24 bg-black"></div>
+<div class="wavy-line"></div>
+<div class="wavy-line"></div>
+<div class="wavy-line"></div>
+</div>
+<div class="h-64 border border-outline bg-white p-6 space-y-4">
+<div class="h-4 w-24 bg-black"></div>
+<div class="wavy-line"></div>
+<div class="wavy-line"></div>
+<div class="wavy-line"></div>
+</div>
+<div class="h-64 border-2 border-black bg-white p-6 hatch-pattern space-y-4">
+<div class="h-4 w-24 bg-black"></div>
+<div class="wavy-line"></div>
+<div class="h-8 w-full border-2 border-black bg-black"></div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Background Blueprint Guides -->
+<div class="fixed inset-0 pointer-events-none z-0 opacity-10">
+<div class="absolute left-0 right-0 top-1/4 border-t border-outline-variant"></div>
+<div class="absolute left-0 right-0 top-1/2 border-t border-outline-variant"></div>
+<div class="absolute left-0 right-0 top-3/4 border-t border-outline-variant"></div>
+<div class="absolute top-0 bottom-0 left-1/4 border-l border-outline-variant"></div>
+<div class="absolute top-0 bottom-0 left-1/2 border-l border-outline-variant"></div>
+<div class="absolute top-0 bottom-0 left-3/4 border-l border-outline-variant"></div>
+</div>
+</body></html>

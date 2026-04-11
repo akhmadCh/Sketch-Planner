@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-secondary-container": "#1b1b1b",
+                "surface-container-low": "#f3f3f4",
+                "background": "#f9f9f9",
+                "surface-tint": "#5e5e5e",
+                "tertiary-fixed-dim": "#474747",
+                "on-primary-container": "#ffffff",
+                "on-error": "#ffffff",
+                "inverse-surface": "#2f3131",
+                "tertiary-container": "#747474",
+                "secondary": "#5e5e5e",
+                "on-tertiary-container": "#ffffff",
+                "surface-container": "#eeeeee",
+                "on-tertiary": "#e2e2e2",
+                "on-secondary": "#ffffff",
+                "surface-container-highest": "#e2e2e2",
+                "on-secondary-fixed-variant": "#3b3b3b",
+                "surface-container-high": "#e8e8e8",
+                "surface-variant": "#e2e2e2",
+                "on-primary-fixed": "#ffffff",
+                "on-primary": "#e2e2e2",
+                "on-error-container": "#410002",
+                "primary": "#000000",
+                "on-surface-variant": "#474747",
+                "secondary-fixed-dim": "#ababab",
+                "secondary-fixed": "#c6c6c6",
+                "surface-dim": "#dadada",
+                "on-background": "#1a1c1c",
+                "tertiary": "#3b3b3b",
+                "primary-fixed": "#5e5e5e",
+                "surface-container-lowest": "#ffffff",
+                "outline-variant": "#c6c6c6",
+                "secondary-container": "#d4d4d4",
+                "tertiary-fixed": "#5e5e5e",
+                "error-container": "#ffdad6",
+                "primary-container": "#3b3b3b",
+                "on-surface": "#1a1c1c",
+                "on-secondary-fixed": "#1b1b1b",
+                "inverse-primary": "#c6c6c6",
+                "surface-bright": "#f9f9f9",
+                "primary-fixed-dim": "#474747",
+                "outline": "#777777",
+                "error": "#ba1a1a",
+                "inverse-on-surface": "#f0f1f1",
+                "surface": "#f9f9f9",
+                "on-primary-fixed-variant": "#e2e2e2",
+                "on-tertiary-fixed": "#ffffff"
+            },
+            "borderRadius": {
+                "DEFAULT": "0px",
+                "lg": "0px",
+                "xl": "0px",
+                "full": "9999px"
+            },
+            "fontFamily": {
+                "headline": ["Space Grotesk"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .blueprint-x {
+            position: relative;
+        }
+        .blueprint-x::before, .blueprint-x::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: currentColor;
+            pointer-events: none;
+        }
+        .blueprint-x::before {
+            clip-path: polygon(0 0, 1px 0, 100% 100%, calc(100% - 1px) 100%);
+        }
+        .blueprint-x::after {
+            clip-path: polygon(100% 0, 100% 1px, 0 100%, 0 calc(100% - 1px));
+        }
+
+        .hatch-pattern {
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, #c6c6c6 10px, #c6c6c6 11px);
+        }
+    </style>
+</head>
+<body class="bg-[#f9f9f9] text-black font-body overflow-hidden">
+<!-- Main Layout Container: Tablet 4:3 Aspect Ratio Simulation -->
+<div class="flex h-screen w-screen overflow-hidden">
+<!-- Predicted Component: SideNavBar (SKELETON_V1) -->
+<aside class="flex flex-col w-20 h-full py-8 items-center gap-4 bg-[#f9f9f9] dark:bg-neutral-900 border-r-2 border-black dark:border-white">
+<div class="bg-black dark:bg-white p-4 cursor-crosshair">
+<span class="material-symbols-outlined text-white dark:text-black">square</span>
+</div>
+<div class="border border-black dark:border-white p-4 m-2 cursor-crosshair hover:opacity-80">
+<span class="material-symbols-outlined">square</span>
+</div>
+<div class="border border-black dark:border-white p-4 m-2 cursor-crosshair hover:opacity-80">
+<span class="material-symbols-outlined">square</span>
+</div>
+<div class="border border-black dark:border-white p-4 m-2 cursor-crosshair hover:opacity-80">
+<span class="material-symbols-outlined">square</span>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col">
+<!-- Predicted Component: TopNavBar (BLUEPRINT_ARCH) -->
+<header class="flex justify-between items-center w-full px-6 py-4 bg-[#f9f9f9] dark:bg-neutral-900 border-b-2 border-black dark:border-white">
+<div class="text-xl font-bold border-2 border-black px-2 py-1 dark:border-white font-['Space_Grotesk'] tracking-tighter uppercase">
+                    BLUEPRINT_ARCH
+                </div>
+<div class="flex gap-6 items-center">
+<nav class="hidden md:flex gap-4">
+<div class="border-b-4 border-black dark:border-white pb-1 font-['Space_Grotesk'] tracking-tighter uppercase cursor-pointer">
+<!-- REDACTED NAV 1 -->
+<div class="h-1 w-12 bg-black"></div>
+</div>
+<div class="text-neutral-400 dark:text-neutral-600 font-['Space_Grotesk'] tracking-tighter uppercase cursor-pointer hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black p-1 transition-transform scale-95">
+<!-- REDACTED NAV 2 -->
+<div class="h-1 w-12 bg-neutral-400"></div>
+</div>
+</nav>
+<div class="flex gap-4">
+<span class="material-symbols-outlined cursor-pointer">grid_view</span>
+<span class="material-symbols-outlined cursor-pointer">layers</span>
+<span class="material-symbols-outlined cursor-pointer">settings</span>
+</div>
+</div>
+</header>
+<!-- Tablet 4:3 Content Area -->
+<div class="flex-1 p-12 flex flex-col gap-12 max-w-[1024px] mx-auto w-full">
+<!-- Top Area: Three square outline boxes side-by-side (Export Placeholders) -->
+<div class="grid grid-cols-3 gap-8">
+<div class="aspect-square border-2 border-primary blueprint-x text-primary flex items-center justify-center">
+<!-- Blueprint Visual Only -->
+</div>
+<div class="aspect-square border-2 border-primary blueprint-x text-primary flex items-center justify-center">
+<!-- Blueprint Visual Only -->
+</div>
+<div class="aspect-square border-2 border-primary blueprint-x text-primary flex items-center justify-center">
+<!-- Blueprint Visual Only -->
+</div>
+</div>
+<!-- Middle Area: Row of three small circles (Profile Placeholders) -->
+<div class="flex justify-start gap-6">
+<div class="w-16 h-16 rounded-full border-2 border-primary blueprint-x text-primary relative overflow-hidden">
+<!-- Blueprint Visual Only -->
+</div>
+<div class="w-16 h-16 rounded-full border-2 border-primary blueprint-x text-primary relative overflow-hidden">
+<!-- Blueprint Visual Only -->
+</div>
+<div class="w-16 h-16 rounded-full border-2 border-primary blueprint-x text-primary relative overflow-hidden">
+<!-- Blueprint Visual Only -->
+</div>
+</div>
+<!-- Bottom Area: Very large empty rectangular box (Table Placeholder) -->
+<div class="flex-1 min-h-[400px] border-2 border-primary blueprint-x text-primary bg-surface-container-lowest">
+<!-- Blueprint Visual Only -->
+</div>
+</div>
+<!-- Footer Meta Info (Skeletal Style) -->
+<footer class="p-6 border-t-2 border-black flex justify-between items-center bg-surface-container-low">
+<div class="flex flex-col gap-1">
+<div class="h-2 w-32 bg-primary"></div>
+<div class="h-1 w-24 bg-outline"></div>
+</div>
+<div class="flex gap-2">
+<div class="w-8 h-8 border border-black flex items-center justify-center">
+<div class="w-4 h-0.5 bg-black rotate-45 absolute"></div>
+<div class="w-4 h-0.5 bg-black -rotate-45 absolute"></div>
+</div>
+<div class="w-8 h-8 border border-black flex items-center justify-center">
+<div class="w-4 h-0.5 bg-black rotate-45 absolute"></div>
+<div class="w-4 h-0.5 bg-black -rotate-45 absolute"></div>
+</div>
+</div>
+</footer>
+</main>
+</div>
+<!-- Decorative Structural Overlays -->
+<div class="fixed top-0 left-0 w-full h-full pointer-events-none opacity-5">
+<div class="absolute top-0 left-1/4 h-full w-px bg-primary"></div>
+<div class="absolute top-0 left-2/4 h-full w-px bg-primary"></div>
+<div class="absolute top-0 left-3/4 h-full w-px bg-primary"></div>
+<div class="absolute top-1/4 left-0 w-full h-px bg-primary"></div>
+<div class="absolute top-2/4 left-0 w-full h-px bg-primary"></div>
+<div class="absolute top-3/4 left-0 w-full h-px bg-primary"></div>
+</div>
+</body></html>

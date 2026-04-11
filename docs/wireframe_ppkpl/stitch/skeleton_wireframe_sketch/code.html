@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Skeletal Blueprint Frame</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@100;200;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary": "#e2e2e2",
+                    "on-tertiary-fixed-variant": "#e2e2e2",
+                    "on-secondary-fixed-variant": "#3b3b3b",
+                    "inverse-primary": "#c6c6c6",
+                    "secondary-container": "#d4d4d4",
+                    "outline-variant": "#c6c6c6",
+                    "secondary": "#5e5e5e",
+                    "on-primary-fixed": "#ffffff",
+                    "primary-fixed": "#5e5e5e",
+                    "on-primary-container": "#ffffff",
+                    "tertiary": "#3b3b3b",
+                    "primary-fixed-dim": "#474747",
+                    "tertiary-fixed-dim": "#474747",
+                    "surface-container-highest": "#e2e2e2",
+                    "background": "#f9f9f9",
+                    "surface-container": "#eeeeee",
+                    "primary-container": "#3b3b3b",
+                    "outline": "#777777",
+                    "tertiary-container": "#747474",
+                    "tertiary-fixed": "#5e5e5e",
+                    "inverse-surface": "#2f3131",
+                    "secondary-fixed": "#c6c6c6",
+                    "inverse-on-surface": "#f0f1f1",
+                    "on-secondary-container": "#1b1b1b",
+                    "error-container": "#ffdad6",
+                    "surface-dim": "#dadada",
+                    "secondary-fixed-dim": "#ababab",
+                    "on-tertiary-fixed": "#ffffff",
+                    "error": "#ba1a1a",
+                    "on-primary": "#e2e2e2",
+                    "on-surface": "#1a1c1c",
+                    "on-error-container": "#410002",
+                    "surface-variant": "#e2e2e2",
+                    "surface-bright": "#f9f9f9",
+                    "on-error": "#ffffff",
+                    "surface": "#f9f9f9",
+                    "on-secondary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-container": "#ffffff",
+                    "on-primary-fixed-variant": "#e2e2e2",
+                    "surface-container-high": "#e8e8e8",
+                    "on-surface-variant": "#474747",
+                    "surface-container-low": "#f3f3f4",
+                    "primary": "#000000",
+                    "on-secondary-fixed": "#1b1b1b",
+                    "on-background": "#1a1c1c",
+                    "surface-tint": "#5e5e5e"
+            },
+            "borderRadius": {
+                    "none": "0",
+                    "DEFAULT": "0",
+                    "lg": "0",
+                    "xl": "0",
+                    "full": "0"
+            },
+            "fontFamily": {
+                    "headline": ["Space Grotesk"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .hatch-pattern {
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, #c6c6c6 10px, #c6c6c6 11px);
+        }
+        .x-placeholder {
+            position: relative;
+        }
+        .x-placeholder::before, .x-placeholder::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .x-placeholder::before {
+            background: linear-gradient(to top right, transparent calc(50% - 1px), #777777, transparent calc(50% + 1px));
+        }
+        .x-placeholder::after {
+            background: linear-gradient(to bottom right, transparent calc(50% - 1px), #777777, transparent calc(50% + 1px));
+        }
+        .wavy-line {
+            height: 2px;
+            width: 100%;
+            background-image: radial-gradient(circle at 10px 0px, transparent 0, transparent 4px, #777777 4px, #777777 6px, transparent 6px);
+            background-size: 20px 10px;
+        }
+        .straight-line {
+            height: 6px;
+            background-color: #000000;
+        }
+        .thin-line {
+            height: 2px;
+            background-color: #777777;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary-container">
+<!-- Top Navigation Anchor Shell -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-neutral-50 dark:bg-neutral-950 border-b-2 border-black dark:border-white">
+<div class="flex items-center gap-4">
+<div class="p-2 border border-black hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-none">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</div>
+<div class="font-['Space_Grotesk'] uppercase tracking-tighter text-xl font-bold text-black dark:text-white">SKELETAL_FRAME</div>
+</div>
+<div class="flex items-center gap-6 h-full">
+<div class="h-full flex items-center px-4 border-b-4 border-black dark:border-white">
+<div class="w-12 thin-line"></div>
+</div>
+<div class="h-full flex items-center px-4 opacity-50">
+<div class="w-12 thin-line"></div>
+</div>
+<div class="p-2 border border-black hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-none">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-7xl mx-auto space-y-12">
+<!-- Top Area: Three square outline boxes (export placeholders) -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="aspect-square border-2 border-primary bg-surface-container-lowest x-placeholder"></div>
+<div class="aspect-square border-2 border-primary bg-surface-container-lowest x-placeholder"></div>
+<div class="aspect-square border-2 border-primary bg-surface-container-lowest x-placeholder"></div>
+</section>
+<!-- Structural Divider (Hatch Pattern) -->
+<div class="h-4 hatch-pattern border-y border-outline-variant"></div>
+<!-- Middle Area: Three small circle outline boxes (profile placeholders) -->
+<section class="flex justify-center items-center gap-12 py-8">
+<div class="w-24 h-24 border-2 border-primary bg-surface-container-low x-placeholder" style="clip-path: circle(50%);"></div>
+<div class="w-24 h-24 border-2 border-primary bg-surface-container-low x-placeholder" style="clip-path: circle(50%);"></div>
+<div class="w-24 h-24 border-2 border-primary bg-surface-container-low x-placeholder" style="clip-path: circle(50%);"></div>
+</section>
+<!-- Redacted Typography Elements for Structure -->
+<div class="space-y-4 max-w-2xl mx-auto">
+<div class="w-3/4 straight-line h-8 bg-primary"></div>
+<div class="space-y-2">
+<div class="w-full thin-line"></div>
+<div class="w-5/6 thin-line"></div>
+<div class="w-4/6 thin-line"></div>
+</div>
+</div>
+<!-- Bottom Area: Large empty rectangular box (table placeholder) -->
+<section class="w-full">
+<div class="w-full h-[400px] border-4 border-primary bg-surface-container-lowest x-placeholder"></div>
+</section>
+<!-- Secondary Redacted Grouping -->
+<section class="grid grid-cols-2 gap-4">
+<div class="p-6 border border-outline-variant bg-surface-container">
+<div class="w-1/2 straight-line mb-4"></div>
+<div class="space-y-2">
+<div class="w-full wavy-line"></div>
+<div class="w-full wavy-line"></div>
+</div>
+</div>
+<div class="p-6 border border-outline-variant bg-surface-container">
+<div class="w-1/2 straight-line mb-4"></div>
+<div class="space-y-2">
+<div class="w-full wavy-line"></div>
+<div class="w-full wavy-line"></div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-4 bg-neutral-50 dark:bg-neutral-950 border-t-2 border-black dark:border-white">
+<div class="flex flex-col items-center gap-1 bg-black text-white dark:bg-white dark:text-black p-2 transition-none">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</div>
+<div class="flex flex-col items-center gap-1 border border-black dark:border-white p-2 hover:invert transition-none">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</div>
+<div class="flex flex-col items-center gap-1 border border-black dark:border-white p-2 hover:invert transition-none">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</div>
+<div class="flex flex-col items-center gap-1 border border-black dark:border-white p-2 hover:invert transition-none">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</div>
+</nav>
+<!-- Aesthetic Floating Guide Lines (Blueprint Feel) -->
+<div class="fixed top-0 left-12 w-px h-full bg-outline-variant opacity-20 pointer-events-none"></div>
+<div class="fixed top-0 right-12 w-px h-full bg-outline-variant opacity-20 pointer-events-none"></div>
+<div class="fixed top-32 left-0 w-full h-px bg-outline-variant opacity-20 pointer-events-none"></div>
+</body></html>
