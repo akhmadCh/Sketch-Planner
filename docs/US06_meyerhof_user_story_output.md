@@ -2,7 +2,7 @@
 
 Prompt: "Sebagai Pengguna, saya ingin menghitung daya dukung tiang menggunakan metode Meyerhof otomatis"
 
-Context File: SKILL.md
+Context File: PRD_joined.txt SKILL.md class_diagram.md database_schema.md
 
 Skills: "sketchplanner-laravel"
 
@@ -31,7 +31,7 @@ Output: @return FoundationResultResource
 // }
 
 Rules:
-// Meyerhof formula: Qu = (qc_avg _ Ap) + (fs_avg _ As)
+// Meyerhof formula: Qu = (qc*avg * Ap) + (fs*avg * As)
 // Ap = (π/4) _ d² → Tip area (m²)
 // As = π _ d \* L → Skin friction area (m²)
 // qc_avg = average of last 8 qc readings at pile tip (kgf/cm²)
