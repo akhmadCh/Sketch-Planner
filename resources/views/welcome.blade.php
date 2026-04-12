@@ -97,7 +97,7 @@
                     </li>
                 </ul>
 
-                <!-- <a href="{{ route('meyerhof_sementara') }}" class="premium-btn btn-outline" style="width: 100%; text-align: center;">Meyerhof Calculator (US06)</a> -->
+                <a href="{{ route('meyerhof_sementara') }}" class="premium-btn btn-outline" style="width: 100%; text-align: center;">Meyerhof Calculator (US06)</a>
             </aside>
         </main>
     </div>
