@@ -61,6 +61,27 @@ class MeyerhofService
             // Allowable bearing capacity in kN
             $qa_kn = ($safetyFactor > 0) ? $qu_kn / $safetyFactor : 0;
 
+            // Pile Group Efficiency & LRFD calculations
+            $nPile = max(1, (int)($soilData['n_pile'] ?? 1));
+            $mPile = max(1, (int)($soilData['m_pile'] ?? 1));
+            $sSpacing = (float)($soilData['s_spacing'] ?? max(0.1, $pileDiameter * 3));
+            $sap2000Load = (float)($soilData['sap2000_load'] ?? 0);
+
+            $groupEfficiency = 1.0;
+            if ($nPile * $mPile > 1) {
+                $theta = rad2deg(atan($pileDiameter / $sSpacing));
+                $groupEfficiency = 1 - ($theta * ((($nPile - 1) * $mPile) + (($mPile - 1) * $nPile)) / (90 * $mPile * $nPile));
+            }
+
+            // Group total capacity
+            $groupTotalCapacity = $qu_kn * $nPile * $mPile;
+            $factoredLoad = 1.4 * $sap2000Load;
+            
+            $lrfdStatus = 'SAFE';
+            if ($sap2000Load > 0 && ($groupTotalCapacity * $groupEfficiency) < $factoredLoad) {
+                $lrfdStatus = 'DANGER';
+            }
+
             // Peat detection logic (qc < 5 && Rf > 5%)
             $peatDetected = false;
             for ($i = 0; $i <= $tipIndex; $i++) {
@@ -78,6 +99,13 @@ class MeyerhofService
             // Determine status based on QA, required load and peat presence
             if ($peatDetected) {
                 $status = FoundationStatus::DANGER;
+            } else if ($sap2000Load > 0) {
+                // If using SAP2000 load, use LRFD check for main status as well
+                if ($lrfdStatus === 'DANGER') {
+                    $status = FoundationStatus::DANGER;
+                } else {
+                    $status = FoundationStatus::SAFE;
+                }
             } else if ($requiredLoad > 0) {
                 if ($qa_kn < $requiredLoad) {
                     $status = FoundationStatus::DANGER;
@@ -97,6 +125,8 @@ class MeyerhofService
                 'safety_factor'      => $safetyFactor,
                 'status'             => $status->value,
                 'peat_warning'       => $peatDetected,
+                'group_efficiency'   => round($groupEfficiency, 4),
+                'lrfd_status'        => $lrfdStatus,
                 'calculation_detail' => (object) [
                     'qc_avg' => round($qc_avg_kgf, 2),
                     'fs_avg' => round($fs_avg_kgf, 2),
