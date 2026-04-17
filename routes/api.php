@@ -9,3 +9,6 @@ Route::get('/user', function (Request $request) {
 
 use App\Http\Controllers\Calculation\MeyerhofController;
 Route::post('/projects/{id}/calculate/meyerhof', [MeyerhofController::class, 'calculate']);
+Route::post('/parse-sap2000', [MeyerhofController::class, 'importSap']);
+Route::get('/seismic', [MeyerhofController::class, 'getSeismic']);
+Route::get('/calculations/{id}/pdf', [MeyerhofController::class, 'downloadPdf']);
