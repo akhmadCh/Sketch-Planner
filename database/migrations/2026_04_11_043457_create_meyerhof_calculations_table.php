@@ -34,6 +34,25 @@ return new class extends Migration
             $table->string('status')->nullable();
             $table->boolean('peat_warning')->default(false);
             $table->json('sondir_data')->nullable();
+            
+            // GPS Coordinates
+            $table->float('latitude')->nullable();
+            $table->float('longitude')->nullable();
+            
+            // Seismic Parameters
+            $table->string('seismic_zone')->nullable();
+            $table->float('ss_value')->nullable();
+            $table->float('s1_value')->nullable();
+            $table->json('seismic_data')->nullable();
+            
+            // SAP2000 References
+            $table->string('sap2000_joint_id')->nullable();
+            $table->float('sap2000_vertical_load')->nullable();
+            
+            // Pile Group Configuration
+            $table->integer('pile_group_n')->nullable();
+            $table->integer('pile_group_m')->nullable();
+
             $table->timestamp('calculated_at')->nullable();
 
             $table->timestamps();
