@@ -69,6 +69,62 @@ classDiagram
         +detectPeatland() Boolean
     }
 
+    class ProfilTanah {
+        +UUID id
+        +String namaProfil
+        +Float kedalamanAirTanah
+        +String jenisTanah
+        +List~LapisanTanah~ lapisan
+        +tambahLapisan() void
+        +validasiProfil() bool
+    }
+
+    class KonfigurasiTiang {
+        +UUID id
+        +String tipeTiang
+        +String bentukPenampang
+        +Float diameter
+        +Float panjang
+        +Float luasTipTiang
+        +Float keliling
+        +String material
+        +hitungRasioEmbedment() Float
+    }
+
+    class LapisanTanah {
+        +UUID id
+        +Int urutanLapisan
+        +Float kedalamanAtas
+        +Float kedalamanBawah
+        +Float kohesi
+        +Float sudutGeser
+        +Float beratUnit
+        +Float nilaiSPT
+        +hitungTebal() Float
+    }
+
+    class KalkulasiMeyerhof {
+        +UUID id
+        +String namaKalkulasi
+        +Float rasioEmbedment
+        +Float faktorNq
+        +Float faktorNc
+        +Float hambatanUjungQp
+        +Float gesekanSelimutQs
+        +Float kapasitasTotalQu
+        +Float faktorKeamanan
+        +Float bebanIjinQa
+        +String kondisiTiang
+        +Date waktuKalkulasi
+        +hitung() void
+        +hitungHambatanUjung() Float
+        +hitungGesekanSelimut() Float
+        +hitungKapasitasTotal() Float
+        +hitungBebanIjin() Float
+        +validasiInput() bool
+        +simpanHasil() void
+    }
+
     %% Relationships
     User "many" o-- "many" Project : akses
     Project "1" --> "many" Report : menghasilkan
@@ -81,3 +137,11 @@ classDiagram
     CalculationEngine ..> SNIStandard : referensi
     CalculationEngine ..> LoadData : validasi
     CalculationEngine ..> SoilData : analisis
+
+    Project "1" *-- "1..*" ProfilTanah : mencakup
+    Project "1" -- "0..*" KalkulasiMeyerhof : memuat
+    ProfilTanah "1" *-- "1..*" LapisanTanah : terdiri dari
+    ProfilTanah "1" -- "0..*" KalkulasiMeyerhof : dianalisis dalam
+    KonfigurasiTiang "1" -- "0..*" KalkulasiMeyerhof : digunakan pada
+    KalkulasiMeyerhof "1" *-- "1..*" DetailHasilKalkulasi : merinci
+    KalkulasiMeyerhof "1" --> "0..*" Report : menghasilkan
