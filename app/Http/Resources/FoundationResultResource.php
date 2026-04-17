@@ -16,6 +16,8 @@ class FoundationResultResource extends JsonResource
             'safety_factor'      => $this->safety_factor,
             'status'             => $this->status,
             'peat_warning'       => $this->peat_warning,
+            'group_efficiency'   => $this->group_efficiency ?? null,
+            'lrfd_status'        => $this->lrfd_status ?? null,
             'calculation_detail' => $this->calculation_detail,
         ];
     }

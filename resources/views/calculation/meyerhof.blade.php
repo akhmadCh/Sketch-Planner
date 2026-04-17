@@ -140,6 +140,39 @@
                     </div>
                 </div>
 
+                <h2 style="font-size: 18px; margin-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.1); border-top: 1px solid rgba(255,255,255,0.1); padding: 12px 0;">Advanced Parameters (USJ 2)</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 24px;">
+                    <div>
+                        <label style="display: block; font-size: 13px; color: #ccc; margin-bottom: 8px;">SAP2000 Load (kN)</label>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="number" step="0.1" x-model="sap2000Load" class="premium-input" style="flex:1;">
+                            <button @click="$refs.csvInput.click()" class="btn-outline" style="padding: 4px 8px; font-size: 12px; white-space: nowrap;" type="button">Import CSV</button>
+                            <input type="file" x-ref="csvInput" style="display:none" @change="importSap2000($event)" accept=".csv,.txt">
+                        </div>
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 13px; color: #ccc; margin-bottom: 8px;">Pile Config (N x M)</label>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="number" x-model="nPile" class="premium-input" placeholder="N" min="1">
+                            <input type="number" x-model="mPile" class="premium-input" placeholder="M" min="1">
+                        </div>
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 13px; color: #ccc; margin-bottom: 8px;">Pile Spacing (m)</label>
+                        <input type="number" step="0.1" x-model="sSpacing" class="premium-input">
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 13px; color: #ccc; margin-bottom: 8px;">GPS Location</label>
+                        <div style="display: flex; gap: 8px;">
+                            <button @click="getLocation()" class="btn-outline" style="width:100%; font-size: 12px;" type="button">Get Location</button>
+                        </div>
+                    </div>
+                    <div style="grid-column: span 2;">
+                        <label style="display: block; font-size: 13px; color: #ccc; margin-bottom: 8px;">Seismic Coordinates</label>
+                        <input type="text" :value="latitude ? `Lat: ${latitude}, Lng: ${longitude}` : 'No GPS Data'" disabled class="premium-input" style="color:#aaa;">
+                    </div>
+                </div>
+
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
                     <h2 style="font-size: 18px; margin: 0;">Sondir (CPT) Data</h2>
                     <button @click="autoPopulateMocks()" class="btn-outline" style="padding: 6px 12px; font-size: 12px;">Auto Generate Mocks</button>
@@ -221,6 +254,10 @@
                                 <div><b style="color: #aaa; font-weight: normal;">Area Skin:</b> <br><span x-text="result.calculation_detail.As + ' m²'" style="font-weight: 600; color: #fff;"></span></div>
                             </div>
                         </div>
+
+                        <div style="margin-top: 16px; text-align: center;">
+                            <a :href="'/api/calculations/' + calcId + '/pdf'" target="_blank" class="btn-outline" style="display:inline-block; text-decoration:none; width:100%; border-color:#00ff88; color:#00ff88;">⬇ Download Technical Report PDF (SNI)</a>
+                        </div>
                     </div>
                 </template>
             </div>
@@ -238,6 +275,13 @@
                 pileDepth: 12.0,
                 requiredLoad: 800,
                 safetyFactor: 2.5,
+                sap2000Load: 0,
+                nPile: 1,
+                mPile: 1,
+                sSpacing: 1.2,
+                latitude: null,
+                longitude: null,
+                calcId: null,
                 sondirRows: [],
                 isLoading: false,
                 result: null,
@@ -263,6 +307,35 @@
                     }
                 },
 
+                async importSap2000(e) {
+                    let file = e.target.files[0];
+                    if(!file) return;
+                    let formData = new FormData();
+                    formData.append('file', file);
+                    try {
+                        let res = await fetch('/api/parse-sap2000', { method: 'POST', body: formData });
+                        let resp = await res.json();
+                        if(resp.data && resp.data.max_load) {
+                            this.sap2000Load = resp.data.max_load;
+                            alert('SAP2000 Max Joint Vertical Load: ' + this.sap2000Load + ' kN');
+                        }
+                    } catch(err) {
+                        alert('Import failed');
+                    }
+                },
+
+                getLocation() {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(pos => {
+                            this.latitude = pos.coords.latitude;
+                            this.longitude = pos.coords.longitude;
+                            alert(`Seismic coordinate locked at: ${this.latitude}, ${this.longitude}`);
+                        });
+                    } else {
+                        alert("Geolocation is not supported by this browser.");
+                    }
+                },
+
                 async calculate() {
                     this.isLoading = true;
                     this.errorMsg = null;
@@ -278,6 +351,12 @@
                         pile_depth: parseFloat(this.pileDepth),
                         required_load: parseFloat(this.requiredLoad),
                         safety_factor: parseFloat(this.safetyFactor),
+                        sap2000_load: parseFloat(this.sap2000Load),
+                        n_pile: parseInt(this.nPile),
+                        m_pile: parseInt(this.mPile),
+                        s_spacing: parseFloat(this.sSpacing),
+                        latitude: this.latitude ? parseFloat(this.latitude) : null,
+                        longitude: this.longitude ? parseFloat(this.longitude) : null,
                         qc_values: qc_values,
                         fs_values: fs_values
                     };
@@ -296,6 +375,7 @@
                         
                         if (response.ok) {
                             this.result = data.data;
+                            this.calcId = data.calc_id;
                         } else {
                             this.errorMsg = data.message || "An error occurred during calculation.";
                             if(data.errors) {

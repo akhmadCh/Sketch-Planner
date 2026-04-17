@@ -25,6 +25,12 @@ class MeyerhofRequest extends FormRequest
             'pile_depth'     => 'required|numeric|min:0.2|max:60',
             'safety_factor'  => 'sometimes|numeric|min:1',
             'required_load'  => 'sometimes|numeric|min:0',
+            'sap2000_load'   => 'sometimes|numeric|min:0',
+            'n_pile'         => 'sometimes|integer|min:1',
+            'm_pile'         => 'sometimes|integer|min:1',
+            's_spacing'      => 'sometimes|numeric|min:0',
+            'latitude'       => 'sometimes|numeric',
+            'longitude'      => 'sometimes|numeric',
         ];
     }
 }

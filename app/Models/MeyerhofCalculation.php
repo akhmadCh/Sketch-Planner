@@ -30,12 +30,23 @@ class MeyerhofCalculation extends Model
         'status',
         'peat_warning',
         'sondir_data',
+        'latitude',
+        'longitude',
+        'seismic_zone',
+        'ss_value',
+        's1_value',
+        'seismic_data',
+        'sap2000_joint_id',
+        'sap2000_vertical_load',
+        'pile_group_n',
+        'pile_group_m',
         'calculated_at'
     ];
 
     protected $casts = [
         'calculated_at' => 'datetime',
         'sondir_data'   => 'array',
+        'seismic_data'  => 'array',
         'status'        => FoundationStatus::class,
         'peat_warning'  => 'boolean',
     ];
