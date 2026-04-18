@@ -138,6 +138,11 @@
                         <label style="display: block; font-size: 13px; color: #ccc; margin-bottom: 8px;">Required Load (kN)</label>
                         <input type="number" step="10" x-model="requiredLoad" class="premium-input">
                     </div>
+                    <div>
+                        <label style="display: block; font-size: 13px; color: #ccc; margin-bottom: 8px;">Water Content (%)</label>
+                        <input type="number" step="1" x-model="waterContent" class="premium-input" placeholder="100 - 1300">
+                        <div style="font-size: 11px; color: #777; margin-top: 6px;">US03: gambut jika 100% - 1300%</div>
+                    </div>
                 </div>
 
                 <h2 style="font-size: 18px; margin-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.1); border-top: 1px solid rgba(255,255,255,0.1); padding: 12px 0;">Advanced Parameters (USJ 2)</h2>
@@ -225,7 +230,7 @@
                             
                             <template x-if="result.peat_warning">
                                 <div style="margin-top: 12px; display: inline-flex; align-items: center; background: rgba(255,51,102,0.15); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; color: #ff4775; border: 1px solid rgba(255,51,102,0.4); box-shadow: 0 0 10px rgba(255,51,102,0.2);">
-                                    ⚠️ PEAT SOIL DETECTED (Rf &gt; 5%)
+                                    ⚠️ PEAT SOIL DETECTED (Rf &gt; 5% or Water Content)
                                 </div>
                             </template>
                         </div>
@@ -275,6 +280,7 @@
                 pileDepth: 12.0,
                 requiredLoad: 800,
                 safetyFactor: 2.5,
+                waterContent: null,
                 sap2000Load: 0,
                 nPile: 1,
                 mPile: 1,
@@ -351,6 +357,7 @@
                         pile_depth: parseFloat(this.pileDepth),
                         required_load: parseFloat(this.requiredLoad),
                         safety_factor: parseFloat(this.safetyFactor),
+                        water_content: this.waterContent !== null && this.waterContent !== '' ? parseFloat(this.waterContent) : null,
                         sap2000_load: parseFloat(this.sap2000Load),
                         n_pile: parseInt(this.nPile),
                         m_pile: parseInt(this.mPile),

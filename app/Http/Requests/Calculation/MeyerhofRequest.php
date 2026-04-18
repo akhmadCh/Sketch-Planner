@@ -20,6 +20,9 @@ class MeyerhofRequest extends FormRequest
             'qc_values.*'    => 'numeric|min:0|max:500',
             'fs_values'      => 'required|array',
             'fs_values.*'    => 'numeric|min:0|max:10',
+            'water_content'  => 'sometimes|numeric|min:0|max:2000',
+            'water_content_values'   => 'sometimes|array',
+            'water_content_values.*' => 'numeric|min:0|max:2000',
             'depth_interval' => 'required|numeric|min:0.2|max:2', // Typically sondir intervals are 0.2m
             'pile_diameter'  => 'required|numeric|min:0.1',
             'pile_depth'     => 'required|numeric|min:0.2|max:60',
