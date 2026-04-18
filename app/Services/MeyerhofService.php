@@ -82,16 +82,35 @@ class MeyerhofService
                 $lrfdStatus = 'DANGER';
             }
 
-            // Peat detection logic (qc < 5 && Rf > 5%)
             $peatDetected = false;
-            for ($i = 0; $i <= $tipIndex; $i++) {
-                $qc = $qcValues[$i] ?? 0;
-                $fs = $fsValues[$i] ?? 0;
-                if ($qc > 0) {
-                    $rf = ($fs / $qc) * 100;
-                    if ($qc < 5 && $rf > 5) {
-                        $peatDetected = true;
-                        break;
+
+            $waterContentInput = $soilData['water_content'] ?? null;
+            $waterContentValues = $soilData['water_content_values'] ?? null;
+            $waterContents = [];
+            if (is_array($waterContentValues)) {
+                $waterContents = array_merge($waterContents, $waterContentValues);
+            }
+            if ($waterContentInput !== null) {
+                $waterContents[] = $waterContentInput;
+            }
+
+            foreach ($waterContents as $wc) {
+                if ($wc !== null && $wc >= 100 && $wc <= 1300) {
+                    $peatDetected = true;
+                    break;
+                }
+            }
+
+            if (!$peatDetected) {
+                for ($i = 0; $i <= $tipIndex; $i++) {
+                    $qc = $qcValues[$i] ?? 0;
+                    $fs = $fsValues[$i] ?? 0;
+                    if ($qc > 0) {
+                        $rf = ($fs / $qc) * 100;
+                        if ($qc < 5 && $rf > 5) {
+                            $peatDetected = true;
+                            break;
+                        }
                     }
                 }
             }
