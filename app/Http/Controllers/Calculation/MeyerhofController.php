@@ -74,6 +74,40 @@ class MeyerhofController extends Controller
         return response()->json(['data' => $data]);
     }
 
+    /**
+     * Get earthquake data from USGS API for a given location
+     */
+    public function getEarthquakeDataUSGS(\Illuminate\Http\Request $request, \App\Services\SeismicService $service): JsonResponse
+    {
+        $request->validate([
+            'lat' => 'required|numeric|between:-90,90',
+            'lng' => 'required|numeric|between:-180,180',
+            'radius' => 'nullable|integer|min:10|max:1000',
+            'min_magnitude' => 'nullable|numeric|min:0',
+            'days' => 'nullable|integer|min:1|max:3650',
+        ]);
+
+        $lat = (float)$request->lat;
+        $lng = (float)$request->lng;
+        $radiusKm = (int)($request->radius ?? 200);
+        $minMagnitude = (float)($request->min_magnitude ?? 4.5);
+        $days = (int)($request->days ?? 365);
+
+        $earthquakeData = $service->getUSGSEarthquakeData($lat, $lng, $radiusKm, $minMagnitude, $days);
+        $riskLevel = $service->calculateRiskLevel($earthquakeData);
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $earthquakeData,
+            'risk_level' => $riskLevel,
+            'location' => [
+                'latitude' => $lat,
+                'longitude' => $lng,
+                'radius_km' => $radiusKm,
+            ]
+        ], 200);
+    }
+
     public function downloadPdf(int $id)
     {
         $calc = \App\Models\MeyerhofCalculation::findOrFail($id);

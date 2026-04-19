@@ -5,6 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sketch Planner Hub</title>
     @vite(['resources/css/app.css'])
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #earthquake-map {
+            height: 500px;
+            border-radius: 8px;
+            margin-top: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        .gps-input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .gps-input-group input {
+            flex: 1;
+            min-width: 150px;
+        }
+        .magnitude-legend {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+            font-size: 14px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+    </style>
 </head>
 <body>
     <div class="ambient-bg"></div>
@@ -40,20 +76,47 @@
             <section style="display: flex; flex-direction: column; gap: 32px;">
                 
                 <div class="glass-panel animate-fade-up delay-1">
-                    <h2 class="section-title">System Overview</h2>
+                    <h2 class="section-title">Seismic Zone Mapping (USGS)</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 16px; font-size: 15px;">
+                        Enter GPS coordinates to automatically fetch earthquake data and zone seismic risk
+                    </p>
                     
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px;">
-                        <div>
-                            <div class="metric-label">Active Deployments</div>
-                            <div class="metric-value">1,402</div>
+                    <div class="gps-input-group">
+                        <input type="number" id="latitude" class="premium-input" placeholder="Latitude (e.g., -6.2)" value="-6.2" step="0.001">
+                        <input type="number" id="longitude" class="premium-input" placeholder="Longitude (e.g., 106.8)" value="106.8" step="0.001">
+                        <input type="number" id="radius" class="premium-input" placeholder="Radius (km)" value="200" min="10" max="1000">
+                        <button id="loadMapBtn" class="premium-btn btn-primary" style="flex-shrink: 0; cursor: pointer;">Load Map</button>
+                    </div>
+
+                    <div id="earthquake-map"></div>
+
+                    <div class="magnitude-legend">
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background: #00ff00;"></div>
+                            <span>Mag 4-5</span>
                         </div>
-                        <div>
-                            <div class="metric-label">Network Efficiency</div>
-                            <div class="metric-value">99.8%</div>
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background: #ffaa00;"></div>
+                            <span>Mag 5-6</span>
                         </div>
-                        <div>
-                            <div class="metric-label">Processing Load</div>
-                            <div class="metric-value" style="color: var(--accent-primary);">12ms</div>
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background: #ff6600;"></div>
+                            <span>Mag 6-7</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background: #ff0000;"></div>
+                            <span>Mag 7+</span>
+                        </div>
+                    </div>
+
+                    <div id="riskDisplay" style="margin-top: 16px; display: none;">
+                        <div style="padding: 12px; background: rgba(255, 255, 255, 0.05); border-radius: 6px; border-left: 4px solid var(--accent-primary);">
+                            <div style="font-weight: 600; margin-bottom: 6px;">Seismic Risk Assessment</div>
+                            <div style="font-size: 14px; color: var(--text-muted);">
+                                <div>Risk Level: <span id="riskLevel" style="color: var(--accent-primary); font-weight: 600;">-</span></div>
+                                <div>Earthquakes Found: <span id="eqCount" style="color: var(--accent-primary); font-weight: 600;">-</span></div>
+                                <div>Max Magnitude: <span id="maxMag" style="color: var(--accent-primary); font-weight: 600;">-</span></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -101,5 +164,146 @@
             </aside>
         </main>
     </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        let map = null;
+        let earthquakeMarkers = [];
+
+        // Initialize map with default location
+        function initMap() {
+            if (!map) {
+                const defaultLat = -6.2;
+                const defaultLng = 106.8;
+                
+                map = L.map('earthquake-map').setView([defaultLat, defaultLng], 8);
+                
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors',
+                    maxZoom: 19,
+                    opacity: 0.8
+                }).addTo(map);
+
+                // Add a marker for the query location
+                const locationMarker = L.marker([defaultLat, defaultLng], {
+                    icon: L.icon({
+                        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+                        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                        iconSize: [25, 41],
+                        iconAnchor: [12, 41],
+                        popupAnchor: [1, -34],
+                        shadowSize: [41, 41]
+                    })
+                }).addTo(map);
+                locationMarker.bindPopup('Query Location').openPopup();
+
+                loadEarthquakes();
+            }
+        }
+
+        // Load earthquakes from USGS API
+        async function loadEarthquakes() {
+            const lat = parseFloat(document.getElementById('latitude').value);
+            const lng = parseFloat(document.getElementById('longitude').value);
+            const radius = parseInt(document.getElementById('radius').value);
+
+            if (isNaN(lat) || isNaN(lng)) {
+                alert('Please enter valid latitude and longitude');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/earthquake-data?lat=${lat}&lng=${lng}&radius=${radius}`);
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    clearMarkers();
+                    
+                    const data = result.data;
+                    const features = data.features || [];
+                    
+                    // Add earthquake markers
+                    features.forEach(feature => {
+                        const coords = feature.geometry.coordinates;
+                        const props = feature.properties;
+                        const mag = props.mag;
+                        const place = props.place;
+                        const time = new Date(props.time).toLocaleDateString();
+
+                        // Determine color based on magnitude
+                        let color = '#00ff00'; // Green
+                        let magnitudeRange = 'Mag 4-5';
+                        
+                        if (mag >= 7) {
+                            color = '#ff0000';
+                            magnitudeRange = 'Mag 7+';
+                        } else if (mag >= 6) {
+                            color = '#ff6600';
+                            magnitudeRange = 'Mag 6-7';
+                        } else if (mag >= 5) {
+                            color = '#ffaa00';
+                            magnitudeRange = 'Mag 5-6';
+                        }
+
+                        const marker = L.circleMarker([coords[1], coords[0]], {
+                            radius: Math.max(5, mag * 1.5),
+                            fillColor: color,
+                            color: '#fff',
+                            weight: 1.5,
+                            opacity: 0.8,
+                            fillOpacity: 0.7
+                        }).addTo(map);
+                        
+                        marker.bindPopup(`
+                            <div style="color: #000; font-size: 12px;">
+                                <strong>${magnitudeRange}</strong><br>
+                                Magnitude: ${mag}<br>
+                                Location: ${place}<br>
+                                Date: ${time}
+                            </div>
+                        `);
+
+                        earthquakeMarkers.push(marker);
+                    });
+
+                    // Update risk display
+                    const riskLevel = result.risk_level;
+                    const maxMag = features.length > 0 ? Math.max(...features.map(f => f.properties.mag)) : 0;
+                    
+                    document.getElementById('riskLevel').textContent = riskLevel;
+                    document.getElementById('eqCount').textContent = features.length;
+                    document.getElementById('maxMag').textContent = maxMag.toFixed(1);
+                    document.getElementById('riskDisplay').style.display = 'block';
+
+                    // Update map center
+                    if (map) {
+                        map.setView([lat, lng], 8);
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading earthquakes:', error);
+                alert('Error loading earthquake data. Please try again.');
+            }
+        }
+
+        // Clear all earthquake markers
+        function clearMarkers() {
+            earthquakeMarkers.forEach(marker => map.removeLayer(marker));
+            earthquakeMarkers = [];
+        }
+
+        // Event listeners
+        document.getElementById('loadMapBtn').addEventListener('click', () => {
+            if (!map) {
+                initMap();
+            }
+            loadEarthquakes();
+        });
+
+        // Initialize map on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            initMap();
+        });
+    </script>
 </body>
 </html>
