@@ -25,24 +25,22 @@ class MeyerhofController extends Controller
 
         $result = $this->meyerhofService->calculateBearingCapacity($data);
 
-        // Calculate and save the record for Audit Trail
         $calculation = MeyerhofCalculation::create([
-            'project_id'        => $id,
-            'calc_name'         => 'Meyerhof calc for ' . $data['point_label'],
-            'point_label'       => $data['point_label'],
-            'total_capacity_qu' => $result->qu_kn,
-            'allowable_load_qa' => $result->qa_kn,
-            'safety_factor'     => $result->safety_factor,
-            'status'            => $result->status,
-            'peat_warning'      => $result->peat_warning,
+            'project_id'            => $id,
+            'calc_name'             => 'Meyerhof calc for ' . $data['point_label'],
+            'point_label'           => $data['point_label'],
+            'total_capacity_qu'     => $result->qu_kn,
+            'allowable_load_qa'     => $result->qa_kn,
+            'safety_factor'         => $result->safety_factor,
+            'status'                => $result->status,
+            'peat_warning'          => $result->peat_warning,
             'sap2000_vertical_load' => $data['sap2000_load'] ?? null,
-            'pile_group_n'      => $data['n_pile'] ?? 1,
-            'pile_group_m'      => $data['m_pile'] ?? 1,
-            'latitude'          => $data['latitude'] ?? null,
-            'longitude'         => $data['longitude'] ?? null,
-            'calculated_at'     => now(),
-            // Assuming required data for other relationships can be null.
-            'created_by'        => auth()->id(),
+            'pile_group_n'          => $data['n_pile'] ?? 1,
+            'pile_group_m'          => $data['m_pile'] ?? 1,
+            'latitude'              => $data['latitude'] ?? null,
+            'longitude'             => $data['longitude'] ?? null,
+            'calculated_at'         => now(),
+            'created_by'            => auth()->id(),
         ]);
 
         return response()->json([
@@ -79,5 +77,27 @@ class MeyerhofController extends Controller
         $calc = \App\Models\MeyerhofCalculation::findOrFail($id);
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('calculation.pdf', ['calc' => $calc]);
         return $pdf->download('meyerhof_report_' . $calc->id . '.pdf');
+    }
+
+    // ── US14 — Stabilitas Geser & Momen ──────────────────
+    public function checkStability(\Illuminate\Http\Request $request, int $id): JsonResponse
+    {
+        $request->validate([
+            'qu_kn'         => 'required|numeric|min:0',
+            'qa_kn'         => 'required|numeric|min:0',
+            'pile_depth'    => 'required|numeric|min:0.2|max:60',
+            'pile_diameter' => 'required|numeric|min:0.1',
+            'lateral_load'  => 'sometimes|numeric|min:0',
+            'moment'        => 'sometimes|numeric|min:0',
+        ]);
+
+        $stabilityService = new \App\Services\StabilityService();
+        $result = $stabilityService->checkStability($request->all());
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Pengecekan stabilitas US14 berhasil.',
+            'data'    => $result,
+        ], 200);
     }
 }
